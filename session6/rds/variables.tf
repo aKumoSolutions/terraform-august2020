@@ -7,5 +7,5 @@ variable "skip_snapshot" {
 }
 
 variable "schema_name" {
-    default = "rds-users"
+  default = "rds-users"
 }

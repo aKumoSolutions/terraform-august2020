@@ -15,24 +15,26 @@ resource "aws_db_instance" "rds_users" {
   vpc_security_group_ids    = [aws_security_group.rds_sg.id]
   publicly_accessible       = var.env == "dev" ? true : false
 
-#   provisioner "local-exec" {
-#     command = <<-EOF
-#             mysql -h "${aws_db_instance.rds_users.address}" -u "${aws_db_instance.rds_users.username}" -p"${random_password.db_password.result}" < "table.sql"
-#             mysql -h 
-#         EOF
-#   }
+  # provisioner "local-exec" {
+  #   command = <<-EOF
+  #     mysql -h ${self.address} -u ${self.username} -p'${random_password.db_password.result}' < "table.sql"
+  #   EOF
+  # }
 }
 
 resource "null_resource" "create_table" {
-    triggers = {
-        # sql = file("table.sql")
-        every_time = timestamp()
-    }
-    depends_on = [aws_db_instance.rds_users]
-    provisioner "local-exec" {
-        command = <<-EOF
-                mysql -h "${aws_db_instance.rds_users.address}" -u "${aws_db_instance.rds_users.username}" -p"${random_password.db_password.result}" < "table.sql"
+  triggers = {
+    # sql = file("table.sql")
+    every_time = timestamp()
+  }
+  depends_on = [aws_db_instance.rds_users]
+  provisioner "local-exec" {
+    command = <<-EOF
+                mysql -h "${aws_db_instance.rds_users.address}" -u "${aws_db_instance.rds_users.username}" < "table.sql"
             EOF
+    environment = {
+      MYSQL_PWD = random_password.db_password.result
+    }
   }
 }
 
@@ -49,10 +51,10 @@ resource "aws_security_group" "rds_sg" {
 }
 
 resource "random_password" "db_password" {
-    keepers = {
-        sql = file("table.sql")
-    }
-  length = 16
-  special = true
+  keepers = {
+    sql = file("table.sql")
+  }
+  length           = 16
+  special          = true
   override_special = "_%#!$"
 }
