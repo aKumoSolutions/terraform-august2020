@@ -14,12 +14,6 @@ resource "aws_db_instance" "rds_users" {
   skip_final_snapshot       = var.skip_snapshot
   vpc_security_group_ids    = [aws_security_group.rds_sg.id]
   publicly_accessible       = var.env == "dev" ? true : false
-
-  # provisioner "local-exec" {
-  #   command = <<-EOF
-  #     mysql -h ${self.address} -u ${self.username} -p'${random_password.db_password.result}' < "table.sql"
-  #   EOF
-  # }
 }
 
 resource "null_resource" "create_table" {
@@ -37,7 +31,6 @@ resource "null_resource" "create_table" {
     }
   }
 }
-
 
 resource "aws_security_group" "rds_sg" {
   name        = "${var.env}-rds-sg"

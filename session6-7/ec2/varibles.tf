@@ -1,7 +1,7 @@
 variable "env" {
-  type = string
+  type        = string
   description = "name of the environments"
-  default = "dev"
+  default     = "dev"
 }
 
 variable "instance_type" {
@@ -9,9 +9,9 @@ variable "instance_type" {
 }
 
 variable "webserver_port" {
-    type = number
+  type = number
 }
 
 variable "cidr" {
-    type = list(string)
+  type = list(string)
 }
