@@ -3,7 +3,7 @@ resource "aws_db_instance" "rds_users" {
   storage_type              = "gp2"
   engine                    = "mysql"
   engine_version            = "5.7"
-  instance_class            = "db.t2.micro"
+  instance_class            = var.instance_class #"db.t2.micro"
   name                      = replace(var.schema_name, "-", "_")
   username                  = "master"
   password                  = random_password.db_password.result

@@ -17,3 +17,5 @@ variable "storage" {
 variable "cidr" {
   type = list(string)
 }
+
+variable "instance_class" {}
