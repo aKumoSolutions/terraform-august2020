@@ -36,6 +36,9 @@ resource "null_resource" "create_table" {
 resource "aws_security_group" "rds_sg" {
   name        = "${var.env}-rds-sg"
   description = "sg for rds db instance"
+  tags = {
+    Environment = var.env
+  }
 }
 
 resource "aws_security_group_rule" "rds_sg_rule" {
