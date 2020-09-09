@@ -9,11 +9,7 @@ resource "aws_instance" "first_ec2" {
 
   vpc_security_group_ids = [aws_security_group.first_sg.id]
 
-  tags = {
-    Name        = format("%s-webserver", var.env),
-    Name2       = "${var.env}-webserver"
-    Environment = var.env
-  }
+  tags = module.tagging.tags
 }
 
 resource "null_resource" "tag_volumes" {
@@ -73,3 +69,8 @@ data "aws_ami" "amazon_centos" {
   }
 }
 
+module "tagging" {
+  source = "../tagging"
+
+  env = "dev01-us"
+}
