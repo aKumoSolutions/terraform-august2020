@@ -24,6 +24,7 @@ locals {
 
 output "tags" {
     value = {
+        "Name"        = "${var.env}-webserver"
         "environment" = local.environment
         "env_to_lower" = local.env_lower
         "testTag" = local.test

@@ -1,5 +1,5 @@
 module "webserver_ec2" {
-  source = "github.com/aKumoSolutions/terraform-august2020//modules/ec2?ref=v0.0.2"
+  source = "github.com/aKumoSolutions/terraform-august2020//modules/ec2?ref=master"
 
   env     = "dev"
   session = "session9"
