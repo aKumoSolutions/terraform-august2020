@@ -38,13 +38,6 @@ resource "aws_security_group" "first_sg" {
     cidr_blocks = var.cidr
   }
 
-  ingress {
-    from_port   = 3000
-    to_port     = 3000
-    protocol    = local.protocol
-    cidr_blocks = var.cidr
-  }
-
   egress {
     from_port   = 0
     to_port     = 0
