@@ -51,6 +51,17 @@ resource "aws_security_group_rule" "rds_sg_rule" {
   cidr_blocks     = var.cidr
 }
 
+resource "aws_security_group_rule" "rds_sg_rule_env" {
+  count = var.env = "dev" ? 1 : 0
+  type = "ingress"
+  security_group_id = aws_security_group.rds_sg.id
+
+  from_port       = 3306
+  to_port         = 3306
+  protocol        = "tcp"
+  cidr_blocks     = var.cidr
+}
+
 resource "random_password" "db_password" {
   keepers = {
     sql = file("${path.module}/table.sql")
